@@ -1,6 +1,6 @@
 resource "hcloud_ssh_key" "default" {
   name       = "default"
-  public_key = file("id_rsa.pub")
+  public_key = file(var.ssh_public_key_file)
 }
 
 data "cloudinit_config" "docker" {
@@ -25,7 +25,7 @@ resource "hcloud_server" "node1" {
     connection {
       type        = "ssh"
       user        = "root"
-      private_key = file("id_rsa")
+      private_key = file(var.ssh_private_key_file)
       host        = self.ipv4_address
     }
     inline = [
